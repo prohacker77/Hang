@@ -107,27 +107,6 @@
       color: #00c6ff;
     }
 
-    .music-btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 12px 25px;
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      border: none;
-      border-radius: 50px;
-      color: white;
-      font-size: 1.1em;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px #00c6ff;
-      cursor: pointer;
-    }
-
-    .music-btn:hover {
-      background: linear-gradient(135deg, #0072ff, #00c6ff);
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00c6ff;
-    }
-
     footer {
       margin-top: 40px;
       font-size: 0.9em;
@@ -171,31 +150,33 @@
           <li>backmhodi</li>
         </ul>
       </div>
-
-      <!-- Play Music Button -->
-      <button class="music-btn" id="playBtn">🎵 Play Music</button>
-      <audio id="bgMusic" src="music.mp3"></audio>
     </div>
 
     <footer>© 2025 HARSH ミ⁠●⁠﹏⁠☉⁠ミ. All rights reserve.</footer>
   </div>
 
+  <!-- Hidden Audio -->
+  <audio id="bgMusic" src="music.mp3"></audio>
+
   <script>
-    const playBtn = document.getElementById("playBtn");
     const music = document.getElementById("bgMusic");
+    let musicPlayed = false;
 
-    playBtn.addEventListener("click", () => {
-      music.play();
-      playBtn.textContent = "Playing... 🎧";
-      playBtn.disabled = true;
+    function playMusicOnce() {
+      if (!musicPlayed) {
+        musicPlayed = true;
+        music.play();
+        setTimeout(() => {
+          music.pause();
+          music.currentTime = 0;
+        }, 60000); // plays for 60 seconds
+      }
+    }
 
-      setTimeout(() => {
-        music.pause();
-        music.currentTime = 0;
-        playBtn.textContent = "🎵 Play Music";
-        playBtn.disabled = false;
-      }, 5000); // Stops after 5 seconds
-    });
+    // Detect first user interaction
+    document.addEventListener("scroll", playMusicOnce);
+    document.addEventListener("touchstart", playMusicOnce);
+    document.addEventListener("click", playMusicOnce);
   </script>
 
 </body>
