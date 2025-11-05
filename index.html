@@ -107,7 +107,7 @@
       color: #00c6ff;
     }
 
-    .telegram-btn {
+    .music-btn {
       display: inline-block;
       margin-top: 25px;
       padding: 12px 25px;
@@ -119,9 +119,10 @@
       text-decoration: none;
       transition: all 0.3s ease;
       box-shadow: 0 0 10px #00c6ff;
+      cursor: pointer;
     }
 
-    .telegram-btn:hover {
+    .music-btn:hover {
       background: linear-gradient(135deg, #0072ff, #00c6ff);
       transform: scale(1.05);
       box-shadow: 0 0 20px #00c6ff;
@@ -171,45 +172,31 @@
         </ul>
       </div>
 
-      <a href="https://t.me/DEADLY_METHOD" class="telegram-btn" target="_blank">Join Krle</a>
+      <!-- Play Music Button -->
+      <button class="music-btn" id="playBtn">🎵 Play Music</button>
+      <audio id="bgMusic" src="music.mp3"></audio>
     </div>
 
     <footer>© 2025 HARSH ミ⁠●⁠﹏⁠☉⁠ミ. All rights reserve.</footer>
   </div>
 
-  <!-- Background Music (hidden, autoplay + loop + fade-in on first click) -->
-  <audio id="bg-music" loop>
-    <source src="music.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
   <script>
-    const audio = document.getElementById("bg-music");
-    let started = false;
+    const playBtn = document.getElementById("playBtn");
+    const music = document.getElementById("bgMusic");
 
-    // Wait for first click/tap to start audio (bypass autoplay block)
-    document.body.addEventListener("click", () => {
-      if (!started) {
-        audio.volume = 0;
-        audio.play().then(() => {
-          // Fade-in over 5 seconds
-          const fadeInDuration = 5000;
-          const step = 0.01;
-          const interval = fadeInDuration * step;
-          const fadeIn = setInterval(() => {
-            if (audio.volume < 1) {
-              audio.volume = Math.min(audio.volume + step, 1);
-            } else {
-              clearInterval(fadeIn);
-            }
-          }, interval);
-        }).catch(err => console.log("Playback blocked:", err));
-        started = true;
-      }
+    playBtn.addEventListener("click", () => {
+      music.play();
+      playBtn.textContent = "Playing... 🎧";
+      playBtn.disabled = true;
+
+      setTimeout(() => {
+        music.pause();
+        music.currentTime = 0;
+        playBtn.textContent = "🎵 Play Music";
+        playBtn.disabled = false;
+      }, 5000); // Stops after 5 seconds
     });
   </script>
 
 </body>
 </html>
-
-<!-- MADE BY HARSH ミ⁠●⁠﹏⁠☉⁠ミ -->
