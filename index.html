@@ -148,7 +148,7 @@
     <div class="card">
       <img src="file.png" alt="HARSH" class="profile-pic" />
       <h1>HARSH</h1>
-      <p>HELLO BHAI LOG 😎 HARSH — a developer 🔥 .</p>
+      <p>HELLO BHAI LOG 😎 HARSH — a hacking and gaming lover.</p>
 
       <div class="info-box">
         <h2>About Me</h2>
@@ -177,30 +177,39 @@
     <footer>© 2025 HARSH ミ⁠●⁠﹏⁠☉⁠ミ. All rights reserve.</footer>
   </div>
 
-  <!-- Background Music (hidden, autoplay + loop + 5s fade-in) -->
-  <audio id="bg-music" autoplay loop>
+  <!-- Background Music (hidden, autoplay + loop + fade-in on first click) -->
+  <audio id="bg-music" loop>
     <source src="music.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
   <script>
-    // Fade-in effect for background music (5 seconds)
     const audio = document.getElementById("bg-music");
-    audio.volume = 0; // Start silent
-    const fadeInDuration = 5000; // 5 seconds
-    const step = 0.01;
-    const interval = fadeInDuration * step; // time between volume increases
+    let started = false;
 
-    const fadeIn = setInterval(() => {
-      if (audio.volume < 1) {
-        audio.volume = Math.min(audio.volume + step, 1);
-      } else {
-        clearInterval(fadeIn);
+    // Wait for first click/tap to start audio (bypass autoplay block)
+    document.body.addEventListener("click", () => {
+      if (!started) {
+        audio.volume = 0;
+        audio.play().then(() => {
+          // Fade-in over 5 seconds
+          const fadeInDuration = 5000;
+          const step = 0.01;
+          const interval = fadeInDuration * step;
+          const fadeIn = setInterval(() => {
+            if (audio.volume < 1) {
+              audio.volume = Math.min(audio.volume + step, 1);
+            } else {
+              clearInterval(fadeIn);
+            }
+          }, interval);
+        }).catch(err => console.log("Playback blocked:", err));
+        started = true;
       }
-    }, interval);
+    });
   </script>
 
 </body>
 </html>
 
-<!-- MADE BY HARSH ミ⁠●⁠﹏⁠☉⁠ミ 
+<!-- MADE BY HARSH ミ⁠●⁠﹏⁠☉⁠ミ -->
